@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public void newUser(CreateUserDto userDto) {
-        var basicRole = roleRepository.findByRoleName(Role.Values.BASIC.name());// Busca o papel (role) de usuário básico no repositório de roles para criar um usuario comum
+        var basicRole = roleRepository.findByRoleName(Role.Values.BASIC.name());
 
         if (userDto.username() == null || userDto.username().isBlank() || userDto.username().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required!");
@@ -40,14 +40,13 @@ public class UserService {
         }
 
         var userFromDb = userRepository.findByUsername(userDto.username());
-        if (userFromDb.isPresent()) {// O isPresent() verifica se algum usuario foi encontrado, isso é possível pois o método findByUsername retorna um Optional<User>
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists!");// Se o usuário já existir, lança uma exceção com o status HTTP 422 (Unprocessable Entity) e uma mensagem de erro indicando que o nome de usuário já existe.
+        if (userFromDb.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists!");
         }
 
         var user = new User();
-        //Pega os dados presentes no DTO depois da verificação e cria um User com os dados presentes no DTO
         user.setUsername(userDto.username());
-        user.setPassword(passwordEncoder.encode(userDto.password()));// Codifica a senha e então a salva no User criado
+        user.setPassword(passwordEncoder.encode(userDto.password()));
         user.setRoles(Set.of(basicRole));
 
         userRepository.save(user);
@@ -66,7 +65,7 @@ public class UserService {
 
         var isAdmin = authUser.getRoles().stream().anyMatch(role -> role.getRoleName().equalsIgnoreCase(Role.Values.ADMIN.name()));
 
-        if (isAdmin || authUser.getUserId().equals(id)) {// Verifica se o usuario e um administrador ou se e o proprio usuario que esta tentando deletar sua conta
+        if (isAdmin || authUser.getUserId().equals(id)) {
             userToDelete.getRoles().clear();
             userRepository.save(userToDelete);
             userRepository.deleteById(id);
