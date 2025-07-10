@@ -30,11 +30,11 @@ public class TweetController {
      * @return
      */
     @GetMapping("/feed")
-    public ResponseEntity<FeedDto> feed(@RequestParam(value = "page", defaultValue = "0") int page, //Indica a página atual, começando do zero.
-                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) { //Indica que o tamanho da página é 10 tweets por padrão, mas pode ser alterado pelo usuário. As paginas vem de acordo com o numero inserido na url da requisicao. Ex.: pageSize=1&page=0 traz a primeira pagina com 1 tweet(o mais recente pois eles estao vindo na ordem descrescente), pageSize=10&page=1 traz a segunda pagina com 10 tweets, e assim por diante.
+    public ResponseEntity<FeedDto> feed(@RequestParam(value = "page", defaultValue = "0") int page,
+                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) { 
         
         var feedDto = tweetService.getFeed(page, pageSize);
-        return ResponseEntity.ok(feedDto);//Devolve um json com todos os tweets do usuario de acordo com o numero de tweets por pagina e o numero de paginas inseridos na URL da requisicao
+        return ResponseEntity.ok(feedDto);
     }
 
     /**
@@ -56,7 +56,7 @@ public class TweetController {
      * @return
      */
     @DeleteMapping("/tweets/{id}")
-    public ResponseEntity<Void> deleteTweet(@PathVariable("id") Long tweetId, JwtAuthenticationToken token) { // ResponseEntity<Void> é usado para retornar uma resposta sem corpo, apenas com o status HTTP.
+    public ResponseEntity<Void> deleteTweet(@PathVariable("id") Long tweetId, JwtAuthenticationToken token) {
         tweetService.deleteTweet(tweetId, token);
         return ResponseEntity.ok().build();
     }
