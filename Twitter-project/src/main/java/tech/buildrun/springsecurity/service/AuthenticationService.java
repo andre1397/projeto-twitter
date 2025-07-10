@@ -31,30 +31,29 @@ public class AuthenticationService {
     public LoginResponse login(LoginRequest loginRequest) {
         var user = userRepository.findByUsername(loginRequest.username());
 
-        if (user.isEmpty() || !user.get().isLogincorrect(loginRequest, passwordEncoder)) {//Se o usuário estiver vazio ou a senha estiver incorreta, estoura uma exception
+        if (user.isEmpty() || !user.get().isLogincorrect(loginRequest, passwordEncoder)) {
             throw new BadCredentialsException("user or password is invalid!");
         }
 
-        var now = Instant.now(); // Obtém o instante atual.
-        var expiresIn = 3600L; // Define o tempo de expiração do token em segundos (1 hora neste caso).
+        var now = Instant.now();
+        var expiresIn = 3600L;
 
-        var scopes = user.get().getRoles().stream() // Obtém as roles do usuário autenticado, que são as permissões ou grupos aos quais o usuário pertence. O stream serve pra permitir que você processe as roles do usuário de forma funcional, usando operações como map, filter, etc.
-                .map(Role::getRoleName) // Mapeia as roles do usuário para seus nomes, que serão usados como escopos no token JWT. Permitindo que as roles de cada usuario logado sejam inserida direto no token JWT gerado para ele
-                .collect(Collectors.joining(" ")); // Junta os nomes das roles em uma única string, separada por espaços. Isso é útil para definir os escopos do token JWT, que são as permissões concedidas ao usuário.
+        var scopes = user.get().getRoles().stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.joining(" "));
 
-        //claims são informações adicionais que podem ser incluídas no token JWT. Elas podem conter dados como o ID do usuário, roles, permissões, etc. Essas informações são úteis para identificar o usuário e suas permissões quando ele faz requisições autenticadas.
         var claims = JwtClaimsSet.builder()
-                .issuer("mybackend") // O emissor do token, que pode ser o nome da sua aplicação ou serviço.
-                .subject(user.get().getUserId().toString()) // O assunto do token, que geralmente é o nome de usuário ou ID do usuário autenticado.
+                .issuer("mybackend")
+                .subject(user.get().getUserId().toString()) 
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiresIn)) // Define a data de expiração do token, que é o instante atual mais o tempo de expiração definido anteriormente.
-                .claim("roles", user.get().getRoles()) // As roles do usuário, que são as permissões ou grupos aos quais o usuário pertence.
-                .claim("scope", scopes) // Insre as roles do usuario no token JWT gerado para ele na hora que fez o login
+                .expiresAt(now.plusSeconds(expiresIn))
+                .claim("roles", user.get().getRoles()) 
+                .claim("scope", scopes)
                 .build();
 
-        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue(); // Cria o token JWT usando o JwtEncoder e os parâmetros definidos anteriormente.
+        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return new LoginResponse(jwtValue, expiresIn); // Retornar uma resposta adequada
+        return new LoginResponse(jwtValue, expiresIn);
     }
 
 }
