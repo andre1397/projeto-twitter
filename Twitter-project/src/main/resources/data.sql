@@ -1,0 +1,2 @@
+INSERT IGNORE INTO tb_roles (role_id, role_name) VALUES (1, 'admin');--Tenta inserir os dados na tabela tb_roles quando a aplicação de inicia, mas o IGNORE faz com que os dados não sejam inseridos no BD se já existir um registro com o mesmo role_id
+INSERT IGNORE INTO tb_roles (role_id, role_name) VALUES (2, 'basic');

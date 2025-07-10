@@ -1,0 +1,19 @@
+services:
+  mysql:
+    #Diz que o container do MySQL será criado a partir da imagem oficial do MySQL, :latest especifica que é a versão mais recente. 
+    image: mysql:latest
+
+    # Especifica a porta que o MySQL irá escutar dentro do container. o Primeiro 3306 indica qual será a porta do lado de fora do container e o segundo 3306 indica a porta interna do container
+    ports:
+      - "3306:3306"
+
+    # Indica que a porta 3306 do container deve ser exposta do lado de fora para o host, permitindo que o MySQL seja acessado externamente.
+    expose:
+      - "3306"
+
+    # Define os dados de ambiente necessários para configurar o MySQL.
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123
