@@ -17,17 +17,17 @@ import jakarta.persistence.Table;
 public class Tweet {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)//SEQUENCE incrementa o id conforme forem entrando mais itens (tweets), ou seja, o id é auto incrementável.
-    @Column(name = "tweet_id")//O nome da coluna no banco de dados será "tweet_id". caso não especifique, o nome será o mesmo que está no código java
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
+    @Column(name = "tweet_id")
     private Long tweetId;
 
-    @ManyToOne//ManyToOne indica que um tweet pertence a um usuário, ou seja, um usuário pode ter vários tweets, mas um tweet só pode pertencer a um usuário.
-    @JoinColumn(name = "user_id")//O nome da coluna no banco de dados será "user_id"
-    private User user;//Criador do tweet
-    private String content;//Conteúdo do tweet
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    private String content;
 
-    @CreationTimestamp//Faz com que essa informação seja inserida de forma automatica no banco de dados, ou seja, não é necessário informar essa informação manualmente.
-    private Instant creationTimestamp;//Registra a hora em que o tweet foi criado
+    @CreationTimestamp
+    private Instant creationTimestamp;
 
     public User getUser() {
         return user;
