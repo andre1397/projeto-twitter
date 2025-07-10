@@ -45,7 +45,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/users")
-    @PreAuthorize("hasAuthority('SCOPE_admin')") // Apenas usuários com a role ADMIN podem acessar esse endpoint, está como scope_admin, pois a geração de jwt dessa aplicação possui uma claim chamada scope que é onde ficam armazenadas as roles. O preAuuthorize é uma anotação do Spring Security que permite restringir o acesso a métodos com base nas roles ou permissões do usuário autenticado. Nesse caso, apenas usuários que possuem a role ADMIN podem acessar o endpoint /users, pra usar ele é necessário usar a annotation @EnableMethodSecurity na classe SecurityConfig
+    @PreAuthorize("hasAuthority('SCOPE_admin')") 
     public ResponseEntity<List<User>> listUsers() {
         var users = userService.listUsers();
         return ResponseEntity.ok(users);
@@ -59,7 +59,7 @@ public class UserController {
      * @return
      */
     @DeleteMapping("/users/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_admin') or #id.toString() == authentication.token.subject") // Apenas usuários com a role admin e o proprio usuario em questão podem acessar esse endpoint, o #id.toString() == authentication.token.subject verifica se o id do usuário que está sendo deletado é o mesmo do usuário autenticado, ou seja, o próprio usuário pode deletar sua conta
+    @PreAuthorize("hasAuthority('SCOPE_admin') or #id.toString() == authentication.token.subject")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id, JwtAuthenticationToken token) {
         userService.deleteUser(id, token);
         return ResponseEntity.ok().build();
