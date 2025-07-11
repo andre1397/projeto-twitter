@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>tech.buildrun</groupId>
-	<artifactId>springsecurity</artifactId>
+	<artifactId>projeto-twitter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springsecurity</name>
+	<name>Projeto Twitter</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
