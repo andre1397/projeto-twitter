@@ -1,5 +1,5 @@
 
-# 🛡️ Projeto Twitter - Spring Security API com JWT + MySQL + Docker
+# Projeto Twitter - Spring Security API com JWT + MySQL + Docker
 
 Este projeto é uma API REST segura, desenvolvida com Java 21 e Spring Boot, utilizando autenticação via JWT com chaves RSA, controle de acesso por roles e persistência de dados com MySQL em container Docker.
 
@@ -7,7 +7,7 @@ Repositório: [https://github.com/andre1397/projeto-twitter.git]
 
 ---
 
-## 🔧 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - Java 21
 - Spring Boot
@@ -20,7 +20,7 @@ Repositório: [https://github.com/andre1397/projeto-twitter.git]
 
 ---
 
-## 🚀 Como executar o projeto
+## Como executar o projeto
 
 ### 1. Clonar o repositório
 
@@ -71,7 +71,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.show-sql=true
 ```
 
-> 🔐 As chaves `app.key` e `app.pub` devem estar presentes na pasta `resources` para validar os tokens JWT.
+> As chaves `app.key` e `app.pub` devem estar presentes na pasta `resources` para validar os tokens JWT.
 
 ---
 
@@ -95,7 +95,7 @@ http://localhost:8080
 
 ---
 
-## 👤 Usuário Administrador Padrão
+## Usuário Administrador Padrão
 
 Na inicialização da aplicação, um usuário `admin` será automaticamente criado se ainda não existir:
 
@@ -107,11 +107,11 @@ Esse usuário pode acessar endpoints restritos à role ADMIN.
 
 ---
 
-## 🔐 Autenticação
+## Autenticação
 
 A autenticação da API é feita via **JWT com chave pública/privada RSA**.
 
-### 🔓 Endpoints públicos
+### Endpoints públicos
 
 | Método | Endpoint   | Descrição                                                                 |
 |--------|------------|---------------------------------------------------------------------------|
@@ -129,7 +129,7 @@ A autenticação da API é feita via **JWT com chave pública/privada RSA**.
 
 ---
 
-### 🔒 Endpoints protegidos (JWT obrigatório)
+### Endpoints protegidos (JWT obrigatório)
 
 Esses endpoints exigem um token JWT válido no header da requisição:
 
@@ -147,7 +147,7 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ---
 
-## 🧪 Rodar os testes
+## Rodar os testes
 
 ```bash
 ./mvnw test
@@ -155,7 +155,7 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ---
 
-## 🧹 Encerrar o ambiente
+## Encerrar o ambiente
 
 ```bash
 docker-compose down
@@ -163,7 +163,7 @@ docker-compose down
 
 ---
 
-## 🐬 Acesso manual ao banco (opcional)
+## Acesso manual ao banco (opcional)
 
 Você pode conectar ao MySQL com qualquer cliente (ex: DBeaver, MySQL Workbench):
 
@@ -175,7 +175,7 @@ Você pode conectar ao MySQL com qualquer cliente (ex: DBeaver, MySQL Workbench)
 
 ---
 
-## 📌 Observações
+## Observações
 
 - As tabelas são criadas automaticamente via JPA.
 - O projeto suporta múltiplas roles por usuário.
